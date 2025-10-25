@@ -5,6 +5,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export function CallToAction() {
+  const scrollToGenerator = () => {
+    const generatorSection = document.getElementById("quote-generator");
+    if (generatorSection) {
+      generatorSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <section className="relative py-24 px-4">
       <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -30,7 +37,11 @@ export function CallToAction() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Button size="lg" className="rounded-full font-semibold text-lg px-8 group">
+          <Button 
+            size="lg" 
+            className="rounded-full font-semibold text-lg px-8 group"
+            onClick={scrollToGenerator}
+          >
             Get Started Now
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>

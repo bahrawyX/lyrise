@@ -5,6 +5,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 export function Hero() {
+  const scrollToGenerator = () => {
+    const generatorSection = document.getElementById("quote-generator");
+    if (generatorSection) {
+      generatorSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
       <div className="absolute inset-0 -z-10">
@@ -53,7 +60,7 @@ export function Hero() {
         >
           Generate Professional
           <br />
-          <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
             Quotes in Seconds
           </span>
         </motion.h1>
@@ -74,7 +81,11 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Button size="lg" className="rounded-full font-semibold text-lg px-8 group">
+          <Button 
+            size="lg" 
+            className="rounded-full font-semibold text-lg px-8 group"
+            onClick={scrollToGenerator}
+          >
             Start Creating
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>

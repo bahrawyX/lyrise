@@ -45,36 +45,53 @@ export function QuoteGenerator() {
     setIsLoading(true);
     
     const loadingToast = toast.loading("Generating your perfect quote...", {
-      description: "Finding the perfect words for you",
+      description: "AI is crafting something special for you",
     });
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      let selectedCat: Category;
+      let categoryForAPI: string;
 
-    let selectedQuote: Quote;
-    let selectedCat: Category;
+      if (categoryId === null) {
+        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+        selectedCat = randomCategory;
+        categoryForAPI = randomCategory.id;
+      } else {
+        selectedCat = categories.find(cat => cat.id === categoryId)!;
+        categoryForAPI = categoryId;
+      }
+     const response = await fetch("/api/generate-quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ category: categoryForAPI }),
+      });
 
-    if (categoryId === null) {
-      const allQuotes = categories.flatMap(cat => 
-        cat.quotes.map(q => ({ ...q, category: cat }))
-      );
-      const randomQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
-      selectedQuote = randomQuote;
-      selectedCat = randomQuote.category;
-    } else {
-      selectedCat = categories.find(cat => cat.id === categoryId)!;
-      const quotes = selectedCat.quotes;
-      selectedQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      if (!response.ok) {
+        throw new Error("Failed to generate quote");
+      }
+
+      const quote = await response.json();
+
+      setCurrentQuote(quote);
+      incrementGeneratedCount();
+      
+      toast.success("Quote generated!", {
+        id: loadingToast,
+        description: `A ${selectedCat.name.toLowerCase()} quote just for you`,
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error("Error generating quote:", error);
+      toast.error("Oops! Something went wrong", {
+        id: loadingToast,
+        description: "Please try again in a moment",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
     }
-
-    setCurrentQuote({ ...selectedQuote, category: selectedCat });
-    setIsLoading(false);
-    incrementGeneratedCount();
-    
-    toast.success("Quote generated!", {
-      id: loadingToast,
-      description: `A ${selectedCat.name.toLowerCase()} quote just for you`,
-      duration: 2000,
-    });
   };
 
   const handleSaveQuote = (quote: SavedQuote) => {
@@ -96,7 +113,7 @@ export function QuoteGenerator() {
   };
 
   return (
-    <section className="overflow-y-hidden  relative min-h-screen flex items-center justify-center py-20 px-4">
+    <section id="quote-generator" className="overflow-y-hidden  relative min-h-screen flex items-center justify-center py-20 px-4">
       <div className="max-w-6xl mx-auto w-full space-y-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
