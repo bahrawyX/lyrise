@@ -6,7 +6,7 @@ Hey there! Welcome to the Lyrise documentation. This guide will help you underst
 
 ## 🎯 What is Lyrise?
 
-Lyrise is a beautiful, AI-powered quote generator landing page. Users can click a category (like "Romantic" or "Inspirational"), and our system generates a unique, never-before-seen quote using AI automation through n8n webhooks. It's like having a personal wisdom generator at your fingertips!
+Lyrise is a beautiful, **100% AI-powered** quote generator landing page. Users can click a category (like "Romantic" or "Inspirational"), and our system generates a **unique, never-before-seen quote in real-time** using AI automation through n8n webhooks. Every quote is dynamically generated - no static database, no repeated quotes. It's like having a personal AI wisdom generator at your fingertips!
 
 ---
 
@@ -57,11 +57,9 @@ lyrise/
 │   ├── Navbar.tsx                # Navigation bar
 │   ├── Footer.tsx                # Footer
 │   └── ui/                       # shadcn/ui components
-├── providers/
-│   ├── quotes-provider.tsx       # Quote state management
-│   └── theme-provider.tsx        # Dark/light mode
-└── lib/
-    └── quotes.json               # Category definitions
+└── providers/
+    ├── quotes-provider.tsx       # Quote state management
+    └── theme-provider.tsx        # Dark/light mode
 ```
 
 ---
@@ -74,12 +72,15 @@ lyrise/
 2. **Frontend sends request** to `/api/generate-quote` with category
 3. **Next.js API route** forwards request to n8n webhook
 4. **n8n workflow**:
-   - Receives category
-   - Calls AI (probably GPT/Claude)
+   - Receives category and role
+   - Calls AI (GPT/Claude/Gemini)
+   - AI generates a **brand new, unique quote**
    - Returns JSON: `{ "quote": "...", "author": "..." }`
 5. **API parses response** and sends back structured data
 6. **Frontend displays quote** with smooth animations
 7. **User can save or reject** the quote
+
+**Note**: Every quote is **100% dynamically generated** - no static database!
 
 ### The Code (Simplified)
 
@@ -105,6 +106,13 @@ return {
 
 **Frontend** (`components/QuoteGenerator.tsx`):
 ```typescript
+// Categories defined in the component (no JSON file needed!)
+const CATEGORIES = [
+  { id: "romantic", name: "Romantic", color: "rose" },
+  { id: "inspirational", name: "Inspirational", color: "blue" },
+  // ... etc
+];
+
 // When button clicked
 const response = await fetch("/api/generate-quote", {
   method: "POST",
@@ -112,25 +120,27 @@ const response = await fetch("/api/generate-quote", {
 });
 
 const quote = await response.json();
-setCurrentQuote(quote); // Display the quote
+setCurrentQuote(quote); // Display the freshly generated quote
 ```
 
-That's it! Simple and clean.
+That's it! Simple, clean, and **100% dynamic**.
 
 ---
 
 ## 🎭 Categories
 
-We support 6 quote categories, each with a unique color theme:
+We support 6 quote categories, each with a unique color theme. **All quotes are AI-generated in real-time:**
 
-| Category       | Color   | Use Case                    |
-|----------------|---------|------------------------------|
-| Romantic       | Rose    | Love, relationships          |
-| Inspirational  | Blue    | Motivation, dreams           |
-| Motivational   | Orange  | Action, hustle               |
-| Wisdom         | Purple  | Deep thoughts, philosophy    |
-| Success        | Emerald | Achievement, goals           |
-| Life           | Cyan    | General life advice          |
+| Category       | Color   | Use Case                    | AI Focus                     |
+|----------------|---------|------------------------------|------------------------------|
+| Romantic       | Rose    | Love, relationships          | Heartfelt, emotional quotes  |
+| Inspirational  | Blue    | Motivation, dreams           | Uplifting, empowering words  |
+| Motivational   | Orange  | Action, hustle               | Drive, determination         |
+| Wisdom         | Purple  | Deep thoughts, philosophy    | Thoughtful, profound wisdom  |
+| Success        | Emerald | Achievement, goals           | Achievement-focused quotes   |
+| Life           | Cyan    | General life advice          | Life lessons, perspective    |
+
+**Every category generates unique quotes each time** - no two generations are the same!
 
 ---
 
@@ -332,13 +342,12 @@ const yourFont = YourFont({
 ```
 
 ### Add New Category
-1. Add to `lib/quotes.json`:
-```json
-{
-  "id": "philosophical",
-  "name": "Philosophical",
-  "color": "indigo"
-}
+1. Add to `CATEGORIES` array in `components/QuoteGenerator.tsx`:
+```typescript
+const CATEGORIES = [
+  // ... existing categories
+  { id: "philosophical", name: "Philosophical", color: "indigo" }
+];
 ```
 
 2. Add color mapping in `route.ts`:
@@ -349,7 +358,15 @@ const colorMap = {
 };
 ```
 
-3. Add CSS color classes if needed.
+3. Add CSS color classes in `QuoteGenerator.tsx`:
+```typescript
+const categoryColors = {
+  indigo: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20 hover:bg-indigo-500/20",
+  // ...
+};
+```
+
+4. **Update your n8n workflow** to handle the new category
 
 ### Change Background
 Replace `/public/background.png` with your pattern image.

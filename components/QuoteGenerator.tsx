@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Shuffle } from "lucide-react";
 import { toast } from "sonner";
-import quotesData from "@/lib/quotes.json";
 import { QuoteCard } from "@/components/QuoteCard";
 import { SavedQuotesFolder } from "./SavedQuotesFolder";
 import { useQuotes } from "@/providers/quotes-provider";
@@ -20,10 +19,18 @@ type Category = {
   id: string;
   name: string;
   color: string;
-  quotes: Quote[];
 };
 
 type SavedQuote = Quote & { category: Category };
+
+const CATEGORIES: Category[] = [
+  { id: "romantic", name: "Romantic", color: "rose" },
+  { id: "inspirational", name: "Inspirational", color: "blue" },
+  { id: "motivational", name: "Motivational", color: "orange" },
+  { id: "wisdom", name: "Wisdom", color: "purple" },
+  { id: "success", name: "Success", color: "emerald" },
+  { id: "life", name: "Life", color: "cyan" },
+];
 
 export function QuoteGenerator() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -39,8 +46,6 @@ export function QuoteGenerator() {
     quotesGeneratedToday,
   } = useQuotes();
 
-  const categories = quotesData.categories as Category[];
-
   const generateQuote = async (categoryId: string | null) => {
     setIsLoading(true);
     
@@ -49,18 +54,20 @@ export function QuoteGenerator() {
     });
 
     try {
-      let selectedCat: Category;
       let categoryForAPI: string;
+      let categoryName: string;
 
       if (categoryId === null) {
-        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-        selectedCat = randomCategory;
+        const randomCategory = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
         categoryForAPI = randomCategory.id;
+        categoryName = randomCategory.name;
       } else {
-        selectedCat = categories.find(cat => cat.id === categoryId)!;
+        const selectedCat = CATEGORIES.find(cat => cat.id === categoryId)!;
         categoryForAPI = categoryId;
+        categoryName = selectedCat.name;
       }
-     const response = await fetch("/api/generate-quote", {
+
+      const response = await fetch("/api/generate-quote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +86,7 @@ export function QuoteGenerator() {
       
       toast.success("Quote generated!", {
         id: loadingToast,
-        description: `A ${selectedCat.name.toLowerCase()} quote just for you`,
+        description: `A ${categoryName.toLowerCase()} quote just for you`,
         duration: 2000,
       });
     } catch (error) {
@@ -146,7 +153,7 @@ export function QuoteGenerator() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap items-center justify-center gap-3"
         >
-          {categories.map((category, index) => (
+          {CATEGORIES.map((category, index) => (
             <motion.div
               key={category.id}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -178,7 +185,7 @@ export function QuoteGenerator() {
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 + categories.length * 0.1 }}
+            transition={{ duration: 0.4, delay: 0.3 + CATEGORIES.length * 0.1 }}
           >
             <Button
               onClick={() => {
