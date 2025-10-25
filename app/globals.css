@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -118,11 +119,21 @@
   }
   body {
     @apply bg-background text-foreground;
+    @apply font-sans;
+
+  }
+  button, a, [role="button"] {
+    @apply cursor-pointer;
   }
 }
-
+body{
+  overflow-x: hidden !important;
+}
 .bg-image{
   background-image: url('/background.png');
   background-size: 8px;
   background-attachment: fixed;
+}
+.space{
+  font-family: var(--font-space-grotesk);
 }

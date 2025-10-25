@@ -1,10 +1,21 @@
-import { ModeToggle } from "@/components/mode-toggle";
-import Image from "next/image";
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { QuoteGenerator } from "@/components/QuoteGenerator";
+import { CallToAction } from "@/components/CallToAction";
+import { Features } from "@/components/Features";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className=" ">
-      a
-    </div>
+    <>
+      <main className="relative">
+        <Navbar />
+        <Hero />
+        <QuoteGenerator />
+        <CallToAction />
+        <Features />
+      </main>
+      <Footer />
+    </>
   );
 }

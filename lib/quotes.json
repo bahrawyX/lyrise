@@ -1,0 +1,107 @@
+{
+  "categories": [
+    {
+      "id": "romantic",
+      "name": "Romantic",
+      "color": "rose",
+      "quotes": [
+        {
+          "id": "rom_1",
+          "text": "In your eyes, I have found my home. In your heart, I have found my love.",
+          "author": "Anonymous"
+        },
+        {
+          "id": "rom_2",
+          "text": "Love is not about how many days, months, or years you have been together. It's about how much you love each other every single day.",
+          "author": "Anonymous"
+        }
+      ]
+    },
+    {
+      "id": "inspirational",
+      "name": "Inspirational",
+      "color": "blue",
+      "quotes": [
+        {
+          "id": "insp_1",
+          "text": "The only way to do great work is to love what you do. If you haven't found it yet, keep looking.",
+          "author": "Steve Jobs"
+        },
+        {
+          "id": "insp_2",
+          "text": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+          "author": "Winston Churchill"
+        }
+      ]
+    },
+    {
+      "id": "motivational",
+      "name": "Motivational",
+      "color": "orange",
+      "quotes": [
+        {
+          "id": "mot_1",
+          "text": "Don't watch the clock; do what it does. Keep going.",
+          "author": "Sam Levenson"
+        },
+        {
+          "id": "mot_2",
+          "text": "The future depends on what you do today. Make it count.",
+          "author": "Mahatma Gandhi"
+        }
+      ]
+    },
+    {
+      "id": "wisdom",
+      "name": "Wisdom",
+      "color": "purple",
+      "quotes": [
+        {
+          "id": "wis_1",
+          "text": "The only true wisdom is in knowing you know nothing.",
+          "author": "Socrates"
+        },
+        {
+          "id": "wis_2",
+          "text": "In the middle of difficulty lies opportunity.",
+          "author": "Albert Einstein"
+        }
+      ]
+    },
+    {
+      "id": "success",
+      "name": "Success",
+      "color": "emerald",
+      "quotes": [
+        {
+          "id": "suc_1",
+          "text": "Success is not the key to happiness. Happiness is the key to success.",
+          "author": "Albert Schweitzer"
+        },
+        {
+          "id": "suc_2",
+          "text": "The way to get started is to quit talking and begin doing.",
+          "author": "Walt Disney"
+        }
+      ]
+    },
+    {
+      "id": "life",
+      "name": "Life",
+      "color": "cyan",
+      "quotes": [
+        {
+          "id": "life_1",
+          "text": "Life is what happens when you're busy making other plans.",
+          "author": "John Lennon"
+        },
+        {
+          "id": "life_2",
+          "text": "The purpose of life is not to be happy. It is to be useful, honorable, compassionate.",
+          "author": "Ralph Waldo Emerson"
+        }
+      ]
+    }
+  ]
+}
+

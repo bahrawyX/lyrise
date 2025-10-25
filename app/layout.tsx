@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Montserrat, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import LenisProvider from "@/components/LenisProvider";
+import { Toaster } from "sonner";
+import { QuotesProvider } from "@/providers/quotes-provider";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -26,19 +29,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
       <body
-        className={`${montserrat.variable} ${spaceGrotesk.variable} w-full relative bg-image bg-[#111111]  antialiased`}
-        
+        className={`${montserrat.variable} ${spaceGrotesk.variable} w-full relative bg-image bg-[#111111] antialiased`}
       >
-        <ThemeProvider
+        <LenisProvider>
+          <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-          {children}
-        </ThemeProvider>
+            <QuotesProvider>
+              {children}
+              <Toaster
+                position="top-center"
+                richColors
+                closeButton
+                theme="dark"
+              />
+            </QuotesProvider>
+          </ThemeProvider>
+        </LenisProvider>
       </body>
     </html>
   );
