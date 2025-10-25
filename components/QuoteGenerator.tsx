@@ -113,7 +113,7 @@ export function QuoteGenerator() {
   };
 
   return (
-    <section id="quote-generator" className="overflow-y-hidden  relative min-h-screen flex items-center justify-center py-20 px-4">
+    <section id="quote-generator" className="overflow-hidden  relative min-h-screen flex items-center justify-center py-20 px-4">
       <div className="max-w-6xl mx-auto w-full space-y-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

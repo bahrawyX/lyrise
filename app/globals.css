@@ -137,3 +137,7 @@ body{
 .space{
   font-family: var(--font-space-grotesk);
 }
+::selection{
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}

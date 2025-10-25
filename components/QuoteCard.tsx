@@ -109,7 +109,7 @@ export function QuoteCard({ quote, onSave, onReject }: QuoteCardProps) {
       }}
       exit={{ opacity: 0, y: -40, scale: 0.95 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="max-w-3xl mx-auto"
+      className="max-w-3xl mx-auto overflow-hidden"
     >
       <div className="relative group">
         <motion.div

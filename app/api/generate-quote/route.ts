@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-const N8N_WEBHOOK_URL = "https://sensei07.app.n8n.cloud/webhook-test/get-quote";
+const N8N_WEBHOOK_URL = "https://sensei07.app.n8n.cloud/webhook/get-quote";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,26 +14,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Call n8n webhook
     const { data } = await axios.post(N8N_WEBHOOK_URL, {
       category,
       role: "user"
     });
 
-    // Extract quote text from n8n response
-    const quoteText = data.content?.parts?.[0]?.text || "";
+    const quoteData = JSON.parse(data.content?.parts?.[0]?.text || "{}");
     
-    if (!quoteText) {
-      throw new Error("No quote received from n8n");
-    }
-
-    // Split quote and author (format: "Quote text - Author Name")
-    const [text, author = "Unknown"] = quoteText.split(" - ").map((s: string) => s.trim());
-
     return NextResponse.json({
       id: `${category}_${Date.now()}`,
-      text,
-      author,
+      text: quoteData?.quote,
+      author: quoteData?.author,
       category: {
         id: category,
         name: category.charAt(0).toUpperCase() + category.slice(1),
