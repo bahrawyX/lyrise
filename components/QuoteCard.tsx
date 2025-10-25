@@ -172,7 +172,7 @@ export function QuoteCard({ quote, onSave, onReject }: QuoteCardProps) {
                   <Button
                     onClick={handleSave}
                     size="lg"
-                    className="rounded-full gap-2 bg-gradient-to-r from-emerald-600 to-green-600 hover:opacity-90 transition-opacity group/save"
+                    className="rounded-full gap-2 bg-linear-to-r from-emerald-600 to-green-600 hover:opacity-90 transition-opacity group/save"
                   >
                     <Save className="w-5 h-5 group-hover/save:scale-110 transition-transform" />
                     Save Quote

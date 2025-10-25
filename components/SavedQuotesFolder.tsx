@@ -52,7 +52,7 @@ export function SavedQuotesFolder({ savedQuotes, onRemoveQuote }: SavedQuotesFol
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
-          className="rounded-full h-16 w-16 shadow-2xl bg-gradient-to-br from-primary to-purple-600 hover:scale-110 transition-transform relative group"
+          className="rounded-full h-16 w-16 shadow-2xl bg-linear-to-br from-primary to-purple-600 hover:scale-110 transition-transform relative group"
         >
           <motion.div
             animate={{ rotateY: isOpen ? 180 : 0 }}
@@ -94,7 +94,7 @@ export function SavedQuotesFolder({ savedQuotes, onRemoveQuote }: SavedQuotesFol
               <div className="h-full flex flex-col">
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
                   <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
+                    <div className="h-12 w-12 rounded-full bg-linear-to-br from-primary to-purple-600 flex items-center justify-center">
                       <FolderOpen className="w-6 h-6" />
                     </div>
                     <div>
